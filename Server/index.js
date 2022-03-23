@@ -33,12 +33,6 @@ app.post("/login", async (req, res) => {
   res.end();
 });
 
-app.get("/test", (req, res) => {
-  const token = "bl8b";
-  console.log(`token: ${token}`);
-  res.end();
-});
-
 app.get("/verifytoken", (req, res) => {
   console.log(`verifying...`);
 
