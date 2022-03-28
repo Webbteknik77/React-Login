@@ -5,7 +5,6 @@ import Home from "./routes/home";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Routes,
   useNavigate,
 } from "react-router-dom";

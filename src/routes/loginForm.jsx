@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import {Redirect, Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import jsCookie from "js-cookie";
-
-/* import { useEffect } from 'react'; */
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -12,59 +10,44 @@ function LoginForm() {
 
   const navigate = useNavigate();
 
-  
-
   const handleSubmit = (event) => {
-    if (username.length < 0) {
-      event.preventDefault();
-      setErrorMessage("The e-mail is to short");
-    }
+    event.preventDefault();
 
     const authenticate = async (username, password) => {
       const url = "/login";
       const options = {
         method: "POST",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 'username': username, 'password': password }),
+        body: JSON.stringify({ username: username, password: password }),
       };
-        
+
       try {
         const response = await fetch(url, options);
         if (response.ok) {
           console.log("ok: ");
           const token = await response.text();
-          jsCookie.set('login-token', token);
+          jsCookie.set("login-token", token);
 
-          navigate('/home');
-        }
-        else {
+          navigate("/home");
+        } else {
           setErrorMessage("Wrong username or password");
         }
-
-        // const json = await response.json();
-
-        // console.log("json: " + json);
-        // return json;
       } catch (error) {
-        console.log('error: ' + error);
+        console.log("error: " + error);
         return error;
       }
     };
 
     authenticate(username, password);
-
-    event.preventDefault();
-
   };
 
   return (
     <div className="form-container">
-      
       <form className="form" onSubmit={handleSubmit}>
-      <h2 className="title">Login </h2>
+        <h2 className="title">Login </h2>
         <input
           id="username"
           placeholder="E-mail or username"
@@ -81,18 +64,15 @@ function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
         ></input>
 
-        <button >Login</button>
+        <button>Login</button>
 
         <p className="link">
-            <a href="">Forgot Password? </a> Or
-            
-            <Link to="/registrationForm"> Sign up</Link>
-          </p>
-          <br />
-          <h3 className="error">{errorMessage}</h3>
+          <Link to="/registrationForm"> Forgot Password? </Link> Or
+          <Link to="/registrationForm"> Sign up</Link>
+        </p>
+        <br />
+        <h3 className="error">{errorMessage}</h3>
       </form>
-
-      
     </div>
   );
 }
