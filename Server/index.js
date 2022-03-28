@@ -30,8 +30,8 @@ app.post("/login", async (req, res) => {
   const authenticate = () => {
     return new Promise((resolve, reject) => {
       User.findOne(
-        { password: credentials.password },
-        "password",
+        { username: credentials.username },
+        "username",
         (err, res) => {
           if (err) {
             return reject(err);
